@@ -157,3 +157,4 @@ C:\Users\chara\Desktop\Library_Management_System\Library_Management_System\backe
 C:\Users\chara\Desktop\Library_Management_System\Library_Management_System\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\chara\Desktop\Library_Management_System\Library_Management_System\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\chara\Desktop\Library_Management_System\Library_Management_System\backend\obj\Debug\net9.0\ref\backend.dll
+C:\Users\chara\Desktop\Library_Management_System\Library_Management_System\backend\obj\Debug\net9.0\backend.sourcelink.json

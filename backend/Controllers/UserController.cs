@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using BCrypt.Net;
@@ -21,14 +21,26 @@ namespace backend.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return Ok(new { message = "User registered successfully" });
-
         }
 
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginDto login)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Username == login.Username);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password, user.Password))
+            {
+                return BadRequest(new { message = "Invalid username or password" });
+            }
+
+            return Ok(new { message = "Login successful", user });
+        }
 
     }
 }
