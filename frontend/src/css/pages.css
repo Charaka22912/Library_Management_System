@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+
+  /* Background container */
+  .login-body {
+    background-image: url('../assets/Home.png');; /* ✅ Make sure image path is correct */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Card container */
+  .login-container {
+    display: flex;
+    width: 80%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Left side */
+  .login-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .login-left h1 {
+    font-size: 24px;
+    color: #000;
+    text-align: center;
+  }
+  
+  /* Right side (form) */
+  .login-right {
+    flex: 1;
+    padding: 40px;
+    background-color: white;
+    justify-items: center;
+  }
+  
+  .login-right h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #222;
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background-color: #00b050;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .login-form button:hover {
+    background-color: #009d45;
+  }
+
+  .login-form .links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+
+  .register-body {
+    background-image: url('../assets/Home.png');; /* ✅ Make sure image path is correct */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Card container */
+  .register-container {
+    justify-content: center;
+    justify-items: center;
+    padding: 30px;
+    width: 80%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .register-form  {
+    width: 100%;
+  }
+  .register-form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 5px 0;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  .register-form button {
+    width: 30%;
+    justify-items: center;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    background-color: #0614d5;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .register-form button:hover {
+    background-color: #020b89;
+  }
+
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form-row label {
+    width: 120px;
+    margin-right: 10px;
+    font-weight: 500;
+  }
+  
+  .form-row input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
