@@ -11,5 +11,8 @@ namespace backend.Models
         public string Nic { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string UserType { get; set; }
+        public string EmployeeID { get; set; }
+
     }
 }

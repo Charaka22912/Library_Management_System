@@ -32,8 +32,8 @@ export default function Login() {
 
       if (response.ok) {
         const result = await response.json();
-        alert('Login successful!');
-        console.log(result);
+        localStorage.setItem('username', result.username);
+        localStorage.setItem('userType', result.userType);
         navigate('/home');
       } else {
         alert('Invalid username or password');

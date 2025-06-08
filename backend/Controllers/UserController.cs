@@ -23,10 +23,19 @@ namespace backend.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
+
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return Ok(new { message = "User registered successfully" });
+        }
+
+
+        [HttpGet("check-username")]
+        public async Task<IActionResult> CheckUsername(string username)
+        {
+            var exists = await _context.Users.AnyAsync(u => u.Username == username);
+            return Ok(new { exists });
         }
 
         [HttpPost("login")]
@@ -39,7 +48,14 @@ namespace backend.Controllers
                 return BadRequest(new { message = "Invalid username or password" });
             }
 
-            return Ok(new { message = "Login successful", user });
+            var response = new
+            {
+                message = "Login successful",
+                username = user.Username,
+                userType = user.UserType  
+            };
+
+            return Ok(response);
         }
 
     }
