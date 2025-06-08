@@ -37,40 +37,56 @@ export default function Addbook() {
   };
 
   return (
-    <div className="home-layout">
+    <div className="add-layout">
       
 
-      <div className="content">
-          <div>
-            <h1>Add a New Book</h1>
-            <form onSubmit={handleAddBook}>
-              <input
-                type="text"
-                name="title"
-                placeholder="Book Title"
-                value={bookData.title}
-                onChange={handleBookChange}
-                required
-              />
-              <input
-                type="text"
-                name="author"
-                placeholder="Author"
-                value={bookData.author}
-                onChange={handleBookChange}
-                required
-              />
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={bookData.description}
-                onChange={handleBookChange}
-                required
-              />
-              <button type="submit">Add Book</button>
-            </form>
-          </div>
+      <div className="add-book-container">
+  <div className="left-container">
+    <h2>Library Management System</h2>
+  </div>
+
+  <div className="right-container">
+    <h1>Add a New Book</h1>
+    <form onSubmit={handleAddBook}>
+      <div className="set">
+        <label>Title</label>
+        <input
+          type="text"
+          name="title"
+          value={bookData.title}
+          onChange={handleBookChange}
+          required
+        />
       </div>
+
+      <div className="set">
+        <label>Author</label>
+        <input
+          type="text"
+          name="author"
+          value={bookData.author}
+          onChange={handleBookChange}
+          required
+        />
+      </div>
+
+      <div className="set">
+        <label>Description</label>
+        <textarea
+          name="description"
+          value={bookData.description}
+          onChange={handleBookChange}
+          required
+        />
+      </div>
+
+      <footer>
+        <button type="submit">Add Book</button>
+      </footer>
+    </form>
+  </div>
+</div>
+
     </div>
   );
 }

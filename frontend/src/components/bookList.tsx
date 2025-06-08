@@ -50,37 +50,39 @@ export default function Booklist() {
   };
 
   return (
-    <div className="home-layout">
+    <div className="layout">
         <div>
-      <div>
-        <h1>Search Books</h1>
-        <input
-          type="text"
-          value={searchTerm}
-          placeholder="Search by title or author"
-          onChange={handleSearch}
-        />
-      </div>
-
-      <div className="content">
-        <div>
-          <h1>All Books</h1>
-          {books.length === 0 ? (
-            <p>No books found.</p>
-          ) : (
-            <ul>
-              {books.map((book) => (
-                <li key={book.id}>
-                  <h3>{book.title}</h3>
-                  <p><strong>Author:</strong> {book.author}</p>
-                  <p>{book.description}</p>
-                  <hr />
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className="search-container">
+        <div className="search-box">
+            <span className="material-symbols-outlined">search</span>
+            <input
+                type="text"
+                value={searchTerm}
+                placeholder="Search by title or author"
+                onChange={handleSearch}
+            />
         </div>
-      </div>
+    </div>
+
+    <div className="card-area">
+        <div className='card'>
+            {books.length === 0 ? (
+                <p>No books found.</p>
+            ) : (
+                <ul className="book-grid">
+                    {books.map((book) => (
+                    <li className="book-card" key={book.id}>
+                    <div className="title-author">
+                      <h3>{book.title}</h3>
+                      <p><strong>Author:</strong> {book.author}</p>
+                    </div>
+                    <p className="description">{book.description}</p>
+                  </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+        </div>
       </div>
     </div>
   );

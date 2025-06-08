@@ -50,8 +50,7 @@
               "RelativeToolTip": "Data\\LibraryContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T05:24:20.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T05:24:20.468Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "Controllers\\BookController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T05:23:53.028Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T05:23:53.028Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "Models\\Book.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T05:23:18.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T05:23:18.021Z"
             },
             {
               "$type": "Document",
@@ -114,8 +111,7 @@
               "RelativeToolTip": "Models\\Users.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T16:14:52.923Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T16:14:52.923Z"
             },
             {
               "$type": "Document",
@@ -127,8 +123,7 @@
               "RelativeToolTip": "Controllers\\UserController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAIwCAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-07T16:06:48.236Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-07T16:06:48.236Z"
             }
           ]
         }

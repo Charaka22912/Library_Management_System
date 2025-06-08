@@ -13,6 +13,7 @@ export default function Managebook() {
   const [searchTerm, setSearchTerm] = useState('');
   const [form, setForm] = useState({ title: '', author: '', description: '', id: 0 });
   const [isEditing, setIsEditing] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchBooks();
@@ -67,6 +68,7 @@ export default function Managebook() {
   const handleEdit = (book: Book) => {
     setForm(book);
     setIsEditing(true);
+    setShowForm(true);
   };
 
   const handleDelete = async (id: number) => {
@@ -77,23 +79,30 @@ export default function Managebook() {
   return (
     <div>
       <h2>Manage Books</h2>
-        <div>
-        <input
-          type="text"
-          value={searchTerm}
-          placeholder="Search by title or author"
-          onChange={handleSearch}
-        />
+      <div>
+        <div className="search-container">
+        <div className="search-box">
+            <span className="material-symbols-outlined">search</span>
+            <input
+                type="text"
+                value={searchTerm}
+                placeholder="Search by title or author"
+                onChange={handleSearch}
+            />
         </div>
-      <form onSubmit={handleSubmit}>
-        <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required />
-        <input name="author" placeholder="Author" value={form.author} onChange={handleChange} required />
-        <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} />
-        <button type="submit">{isEditing ? 'Update' : 'Add'} Book</button>
-      </form>
-      <ul>
+        </div>
+        </div>
+      {showForm && (
+  <form onSubmit={handleSubmit}>
+    <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required />
+    <input name="author" placeholder="Author" value={form.author} onChange={handleChange} required />
+    <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} />
+    <button type="submit">{isEditing ? 'Update' : 'Add'} Book</button>
+  </form>
+)}
+      <ul className="book-grid">
         {books.map((book) => (
-          <li key={book.id}>
+          <li className="book-card" key={book.id}>
             <strong>{book.title}</strong> by {book.author}
             <button onClick={() => handleEdit(book)}>Edit</button>
             <button onClick={() => handleDelete(book.id)}>Delete</button>
