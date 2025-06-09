@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import '../css/home.css';
+import React, { useEffect, useState } from "react";
+import "../css/home.css";
 
 interface Book {
   id: number;
@@ -11,7 +11,7 @@ interface Book {
 export default function Booklist() {
   const [books, setBooks] = useState<Book[]>([]);
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchBooks();
@@ -19,16 +19,16 @@ export default function Booklist() {
 
   const fetchBooks = async () => {
     try {
-      const res = await fetch('http://localhost:5275/api/books');
+      const res = await fetch("http://localhost:5275/api/books");
       if (res.ok) {
         const data = await res.json();
         setBooks(data);
         setAllBooks(data); // Store all books for filtering
       } else {
-        console.error('Failed to fetch books');
+        console.error("Failed to fetch books");
       }
     } catch (err) {
-      console.error('Error:', err);
+      console.error("Error:", err);
     }
   };
 
@@ -51,37 +51,39 @@ export default function Booklist() {
 
   return (
     <div className="layout">
-        <div>
+      <div>
         <div className="search-container">
-        <div className="search-box">
+          <div className="search-box">
             <span className="material-symbols-outlined">search</span>
             <input
-                type="text"
-                value={searchTerm}
-                placeholder="Search by title or author"
-                onChange={handleSearch}
+              type="text"
+              value={searchTerm}
+              placeholder="Search by title or author"
+              onChange={handleSearch}
             />
+          </div>
         </div>
-    </div>
 
-    <div className="card-area">
-        <div className='card'>
+        <div className="card-area">
+          <div className="card_book">
             {books.length === 0 ? (
-                <p>No books found.</p>
+              <p>No books found.</p>
             ) : (
-                <ul className="book-grid">
-                    {books.map((book) => (
-                    <li className="book-card" key={book.id}>
+              <ul className="book-grid">
+                {books.map((book) => (
+                  <li className="book-card" key={book.id}>
                     <div className="title-author">
                       <h3>{book.title}</h3>
-                      <p><strong>Author:</strong> {book.author}</p>
+                      <p>
+                        <strong>Author:</strong> {book.author}
+                      </p>
                     </div>
                     <p className="description">{book.description}</p>
                   </li>
-                    ))}
-                </ul>
+                ))}
+              </ul>
             )}
-        </div>
+          </div>
         </div>
       </div>
     </div>

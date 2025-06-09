@@ -55,6 +55,7 @@ export default function Addbook() {
           name="title"
           value={bookData.title}
           onChange={handleBookChange}
+          placeholder='Enter book title'
           required
         />
       </div>
@@ -66,6 +67,7 @@ export default function Addbook() {
           name="author"
           value={bookData.author}
           onChange={handleBookChange}
+          placeholder='Enter Author Name'
           required
         />
       </div>
@@ -76,6 +78,7 @@ export default function Addbook() {
           name="description"
           value={bookData.description}
           onChange={handleBookChange}
+          placeholder='Enter book description'
           required
         />
       </div>
