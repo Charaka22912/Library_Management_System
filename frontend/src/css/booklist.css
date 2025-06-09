@@ -1,0 +1,155 @@
+.search-box {
+  position: relative;
+  width: 250px;
+  margin: 20px auto;
+  margin-bottom: 0%;
+}
+
+.search-box input {
+  width: 100%;
+  height: 40px;
+  padding-left: 40px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.search-box h1 {
+  margin-bottom: 5px;
+  font-size: 20px;
+  text-align: center;
+  color: #b8b4b4;
+}
+
+.search-box input[type="text"]:focus {
+  outline: none;
+  width: 350px;
+}
+.search-container {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.search-box .material-symbols-outlined {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #555;
+}
+
+.card-area {
+  padding: 10px;
+}
+
+.card_book {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin-top: 0px;
+}
+
+.book-card p {
+  margin: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+/* Allow full description on hover */
+.book-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  word-wrap: break-word;
+  border-color: #3f7bcf;
+  border-width: 1px;
+  font-family: "poppins", sans-serif;
+}
+.book-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  height: 200px;
+  background-color: #347deb;
+  color: white;
+}
+
+.book-card::-webkit-scrollbar {
+  width: 5px;
+}
+
+.book-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.book-card::-webkit-scrollbar-thumb {
+  background: #e2e3e7;
+  border-radius: 15px;
+}
+.book-card p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+/* Initially show title and author */
+.book-card .title-author p {
+  display: block;
+  transition: opacity 0.3s ease;
+  word-wrap: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+.heading {
+  font-size: 30px;
+  font-weight: bold;
+  color: #3f7bcf;
+  justify-items: center;
+  justify-content: center;
+}
+.book-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.book-card .description {
+  display: none;
+  white-space: normal; /* Allow line breaks */
+  word-wrap: break-word; /* Break long words */
+  overflow-wrap: break-word; /* Ensure long text wraps */
+  font-weight: bold;
+  overflow-y: auto;
+}
+
+/* On hover, hide title & author, show description */
+.book-card:hover .title-author {
+  display: none;
+}
+
+.book-card:hover .description {
+  display: block;
+}

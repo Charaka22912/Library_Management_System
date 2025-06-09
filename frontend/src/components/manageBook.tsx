@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Book } from "../../src/domain/Book";
+import "../../src/css/managebook.css";
+import {
+  getBooks,
+  updateExistingBook,
+  deleteExistingBook,
+} from "../../src/useCases/book/bookservice";
 
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-}
-
-export default function Managebook() {
+export default function ManageBook() {
   const [books, setBooks] = useState<Book[]>([]);
   const [allBooks, setAllBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<Book>({
     title: "",
     author: "",
     description: "",
@@ -19,42 +19,31 @@ export default function Managebook() {
   });
   const [isEditing, setIsEditing] = useState(false);
   const [showForm, setShowForm] = useState(false);
-
   const formRef = useRef<HTMLFormElement | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
 
   useEffect(() => {
-    fetchBooks();
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (formRef.current && !formRef.current.contains(e.target as Node)) {
-        setShowForm(false);
-        setIsEditing(false);
-        setForm({ title: "", author: "", description: "", id: 0 });
-      }
-    };
-
+    loadBooks();
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const fetchBooks = async () => {
-    const res = await fetch("http://localhost:5275/api/books");
-    const data = await res.json();
+  const loadBooks = async () => {
+    const data = await getBooks();
     setBooks(data);
-    setAllBooks(data); // Store all books for filtering
+    setAllBooks(data);
+  };
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (formRef.current && !formRef.current.contains(e.target as Node)) {
+      resetForm();
+    }
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-
-    if (!term) {
-      setBooks(allBooks);
-      return;
-    }
-
+    if (!term) return setBooks(allBooks);
     const filtered = allBooks.filter(
       (book) =>
         book.title.toLowerCase().includes(term) ||
@@ -71,23 +60,10 @@ export default function Managebook() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!form.id) {
-      console.error("No book selected for editing.");
-      return;
-    }
-
-    const url = `http://localhost:5275/api/books/${form.id}`;
-
-    await fetch(url, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-
-    setForm({ title: "", author: "", description: "", id: 0 });
-    setIsEditing(false);
-    fetchBooks();
+    if (!form.id) return console.error("No book selected for editing.");
+    await updateExistingBook(form);
+    resetForm();
+    loadBooks();
   };
 
   const handleEdit = (book: Book) => {
@@ -96,14 +72,32 @@ export default function Managebook() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id: number) => {
-    await fetch(`http://localhost:5275/api/books/${id}`, { method: "DELETE" });
-    fetchBooks();
+  const handleDeleteClick = (id: number) => {
+    setConfirmDeleteId(id); // Open modal
   };
 
+  const confirmDelete = async () => {
+    if (confirmDeleteId !== null) {
+      await deleteExistingBook(confirmDeleteId);
+      loadBooks();
+      setConfirmDeleteId(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setConfirmDeleteId(null);
+  };
+
+  const resetForm = () => {
+    setShowForm(false);
+    setIsEditing(false);
+    setForm({ title: "", author: "", description: "", id: 0 });
+  };
   return (
     <div>
-      <h2>Manage Books</h2>
+      <div className="book-manage-container">
+        <h1 className="heading">Manage Book</h1>
+      </div>
       {!showForm ? (
         <>
           <div className="search-container">
@@ -143,7 +137,7 @@ export default function Managebook() {
                     </button>
                     <button
                       className="delete"
-                      onClick={() => handleDelete(book.id)}
+                      onClick={() => handleDeleteClick(book.id)}
                     >
                       Delete
                     </button>
@@ -155,8 +149,9 @@ export default function Managebook() {
         </>
       ) : (
         <form onSubmit={handleSubmit} ref={formRef} className="edit-form">
-          <h2>Edit Book</h2>
+          <h2>Edit Book Details</h2>
           <div className="input-group">
+            <label htmlFor="title">Title</label>
             <input
               name="title"
               value={form.title}
@@ -166,6 +161,7 @@ export default function Managebook() {
             />
           </div>
           <div className="input-group">
+            <label htmlFor="author">Author</label>
             <input
               name="author"
               value={form.author}
@@ -175,6 +171,7 @@ export default function Managebook() {
             />
           </div>
           <div className="input-group">
+            <label htmlFor="description">Description</label>
             <textarea
               name="description"
               value={form.description}
@@ -196,6 +193,17 @@ export default function Managebook() {
             </button>
           </div>
         </form>
+      )}
+      {confirmDeleteId !== null && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <p>Are you sure you want to delete this book?</p>
+            <div className="modal-buttons">
+              <button onClick={confirmDelete}>Yes</button>
+              <button onClick={cancelDelete}>Cancel</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

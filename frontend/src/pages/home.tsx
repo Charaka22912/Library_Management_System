@@ -1,29 +1,29 @@
-// src/pages/Home.tsx
 import React, { useState, useEffect } from "react";
 import "../css/home.css";
 import Addbook from "../components/addBook";
 import BookList from "../components/bookList";
 import ManageBook from "../components/manageBook";
+import { getCurrentUser } from "../useCases/user/getCurrentUser";
+import { userStorage } from "../infrastructure/userStorage";
 
 export default function Home() {
   const [activeView, setActiveView] = useState<"view" | "add" | "manage">(
     "view"
   );
   const [username, setUsername] = useState<string>("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState<"Student" | "Employee" | "">("");
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    const storedUserType = localStorage.getItem("userType");
-
-    if (storedUsername) setUsername(storedUsername);
-    if (storedUserType) setUserType(storedUserType);
+    const user = getCurrentUser();
+    if (user) {
+      setUsername(user.username);
+      setUserType(user.userType);
+    }
   }, []);
 
   const handleLogout = () => {
-    // Clear user session (example: localStorage or context)
-    localStorage.removeItem("user");
-    window.location.href = "/"; // or navigate to login page
+    userStorage.clearUser();
+    window.location.href = "/";
   };
 
   return (
@@ -61,9 +61,7 @@ export default function Home() {
 
             {userType === "Employee" && (
               <li
-                className={`menu-item ${
-                  activeView === "manage" ? "active" : ""
-                }`}
+                className={`menu-item ${activeView === "manage" ? "active" : ""}`}
                 onClick={() => setActiveView("manage")}
               >
                 <span className="menu-icon material-symbols-outlined">
@@ -78,7 +76,7 @@ export default function Home() {
 
       <div className="content">
         <button className="logout-button" onClick={handleLogout}>
-          Logout
+          <span className="material-symbols-outlined">logout</span>
         </button>
         {activeView === "view" && <BookList />}
         {activeView === "add" && <Addbook />}

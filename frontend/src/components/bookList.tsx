@@ -1,56 +1,41 @@
 import React, { useEffect, useState } from "react";
-import "../css/home.css";
+import "../css/booklist.css";
+import { Book } from "../domain/Book";
+import { fetchAndFilterBooks } from "../useCases/book/fetchAndFilterBooks";
 
-interface Book {
-  id: number;
-  title: string;
-  author: string;
-  description: string;
-}
-
-export default function Booklist() {
+export default function BookList() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [allBooks, setAllBooks] = useState<Book[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetchBooks();
+    loadBooks();
   }, []);
 
-  const fetchBooks = async () => {
+  const loadBooks = async () => {
     try {
-      const res = await fetch("http://localhost:5275/api/books");
-      if (res.ok) {
-        const data = await res.json();
-        setBooks(data);
-        setAllBooks(data); // Store all books for filtering
-      } else {
-        console.error("Failed to fetch books");
-      }
+      const results = await fetchAndFilterBooks("");
+      setBooks(results);
     } catch (err) {
-      console.error("Error:", err);
+      console.error(err);
     }
   };
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const term = e.target.value.toLowerCase();
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value;
     setSearchTerm(term);
-
-    if (!term) {
-      setBooks(allBooks);
-      return;
+    try {
+      const results = await fetchAndFilterBooks(term);
+      setBooks(results);
+    } catch (err) {
+      console.error(err);
     }
-
-    const filtered = allBooks.filter(
-      (book) =>
-        book.title.toLowerCase().includes(term) ||
-        book.author.toLowerCase().includes(term)
-    );
-    setBooks(filtered);
   };
 
   return (
     <div className="layout">
+      <div className="book-list-container">
+        <h1 className="heading">Book List</h1>
+      </div>
       <div>
         <div className="search-container">
           <div className="search-box">
@@ -73,12 +58,21 @@ export default function Booklist() {
                 {books.map((book) => (
                   <li className="book-card" key={book.id}>
                     <div className="title-author">
-                      <h3>{book.title}</h3>
+                      <p>
+                        <strong>Title : </strong>
+                        {book.title}
+                      </p>
                       <p>
                         <strong>Author:</strong> {book.author}
                       </p>
+                      <p>
+                        <strong>Description:</strong> {book.description}
+                      </p>
                     </div>
-                    <p className="description">{book.description}</p>
+                    <p className="description">
+                      Description :<br />
+                      {book.description}
+                    </p>
                   </li>
                 ))}
               </ul>
