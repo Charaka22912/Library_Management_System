@@ -53,7 +53,7 @@ Navigate to the client directory:
 
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 
