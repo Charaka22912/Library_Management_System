@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import Admin from "./pages/admin";
 function App() {
   return (
+    //rendering the routes for the application
     <Routes>
       <Route path="" element={<Login />} />
       <Route path="/register" element={<Register />} />

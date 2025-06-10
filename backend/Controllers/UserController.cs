@@ -20,7 +20,8 @@ namespace backend.Controllers
         {
             _context = context;
         }
-        
+
+        //endpoint to get all users
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -28,7 +29,7 @@ namespace backend.Controllers
             return Ok(users);
         }
 
-        // DELETE: api/users/{id}
+        //Endpoint to delete a user by ID
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -39,6 +40,7 @@ namespace backend.Controllers
             return Ok(new { message = "User deleted successfully" });
         }
 
+        // Endpoint to register a new user
         [HttpPost("register")]
         public async Task<ActionResult<User>> CreateUser([FromBody] User user)
         {
@@ -50,6 +52,7 @@ namespace backend.Controllers
         }
 
 
+        // Endpoint to check if a username exists
         [HttpGet("check-username")]
         public async Task<IActionResult> CheckUsername(string username)
         {
@@ -57,12 +60,13 @@ namespace backend.Controllers
             return Ok(new { exists });
         }
 
+        // Endpoint to login a user
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto login)
         {
             var user = _context.Users.FirstOrDefault(u => u.Username == login.Username);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password, user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(login.Password, user.Password)) // verify password
             {
                 return BadRequest(new { message = "Invalid username or password" });
             }
@@ -79,6 +83,7 @@ namespace backend.Controllers
         }
 
 
+        // Endpoint to get user profile by ID
         [HttpGet("profile/{id}")]
         public async Task<IActionResult> GetUserProfile(int id)
         {
@@ -90,6 +95,7 @@ namespace backend.Controllers
             return Ok(user); // return all user fields
         }
 
+        // Endpoint to update user details
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
         {

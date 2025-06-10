@@ -1,8 +1,10 @@
 import { Book } from "../domain/Book";
 
-const API_BASE = "http://localhost:5275/api/books";
+const API_BASE = "http://localhost:5275/api/books"; // Base URL for the API
 
+// Service to interact with the book API
 export const bookApi = {
+  // Fetch all books from the API
   async fetchBooks(): Promise<Book[]> {
     const res = await fetch("http://localhost:5275/api/books");
     if (!res.ok) {
@@ -11,6 +13,7 @@ export const bookApi = {
     return await res.json();
   },
 
+  // add a new book to the API
   addBook: async (book: Omit<Book, "id">): Promise<void> => {
     const res = await fetch("http://localhost:5275/api/books", {
       method: "POST",
@@ -20,6 +23,7 @@ export const bookApi = {
     if (!res.ok) throw new Error("Failed to add book");
   },
 
+  //edit book
   async updateBook(book: Book): Promise<void> {
     const res = await fetch(`${API_BASE}/${book.id}`, {
       method: "PUT",
@@ -31,6 +35,7 @@ export const bookApi = {
     }
   },
 
+  // delete book
   async deleteBook(id: number): Promise<void> {
     const res = await fetch(`${API_BASE}/${id}`, {
       method: "DELETE",

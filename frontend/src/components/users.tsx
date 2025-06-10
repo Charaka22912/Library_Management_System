@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+//importing necessary components and styles
+
 import { Users } from "../../src/domain/User";
 import "../css/admin.css";
 import { getAllUsers, deleteUserById } from "../infrastructure/userStorage";
 
 export default function UserManagement() {
-  const [users, setUsers] = useState<Users[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<Users[]>([]); // State to hold the list of users
+  const [loading, setLoading] = useState(true); // State to manage loading state
 
+  // Function to fetch all users from the backend
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -22,6 +25,7 @@ export default function UserManagement() {
     fetchUsers();
   }, []);
 
+  // Function to handle user deletion
   const handleDelete = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -34,6 +38,8 @@ export default function UserManagement() {
     }
   };
 
+  // Render the component
+  // If loading, show a loading message
   if (loading) return <p>Loading users...</p>;
 
   return (
@@ -42,6 +48,7 @@ export default function UserManagement() {
         <h1 className="heading">All registerd Users</h1>
       </div>
       <table>
+        {/* Table to display user information */}
         <thead>
           <tr>
             <th>ID</th>
@@ -64,7 +71,7 @@ export default function UserManagement() {
               <td>{user.userType}</td>
               <td>
                 <button
-                  onClick={() => handleDelete(user.id!)}
+                  onClick={() => handleDelete(user.id!)} // Handle delete button click
                   style={{ color: "red" }}
                 >
                   Delete

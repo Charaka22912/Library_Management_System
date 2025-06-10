@@ -1,66 +1,75 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const [usernameError, setUsernameError] = useState('');
+  const [usernameError, setUsernameError] = useState("");
 
+  // Function to check username availability
   const checkUsernameAvailability = async (username: string) => {
     try {
-      const response = await fetch(`http://localhost:5275/api/users/check-username?username=${username}`);
+      const response = await fetch(
+        `http://localhost:5275/api/users/check-username?username=${username}`
+      );
       const data = await response.json();
       if (data.exists) {
-        setUsernameError('Username is already taken');
+        setUsernameError("Username is already taken");
       } else {
-        setUsernameError('');
+        setUsernameError("");
       }
     } catch (error) {
-      console.error('Error checking username:', error);
+      console.error("Error checking username:", error);
     }
   };
 
+  // State to hold form data
   const [formData, setFormData] = useState({
-    fullName: '',
-    address: '',
-    dob: '',
-    nic: '',
-    username: '',
-    password: '',
-    userType: 'Member',
-    employeeId: ''
+    fullName: "",
+    address: "",
+    dob: "",
+    nic: "",
+    username: "",
+    password: "",
+    userType: "Member",
+    employeeId: "",
   });
 
+  // State to hold validation errors
   const [errors, setErrors] = useState({
-    nic: '',
-    dob: '',
-    employeeId: ''
+    nic: "",
+    dob: "",
+    employeeId: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  // Handler for input changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error message for the field being edited
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      [name]: ''
+      [name]: "",
     }));
 
-    if (name === 'username') {
-        checkUsernameAvailability(value);
-      }
+    if (name === "username") {
+      checkUsernameAvailability(value);
+    }
   };
 
+  // Function to validate form data
   const validate = () => {
     const newErrors: any = {};
 
     // NIC validation
     if (!/^(\d{9}[vxVX]|\d{12})$/.test(formData.nic)) {
-      newErrors.nic = 'Invalid NIC format';
+      newErrors.nic = "Invalid NIC format";
     }
 
     // DOB validation
@@ -68,12 +77,12 @@ export default function RegisterPage() {
     const dob = new Date(formData.dob);
     const age = today.getFullYear() - dob.getFullYear();
     if (!formData.dob || age < 10) {
-      newErrors.dob = 'You must be at least 10 years old';
+      newErrors.dob = "You must be at least 10 years old";
     }
 
     // Employee ID validation
-    if (formData.userType === 'Employee' && !formData.employeeId.trim()) {
-      newErrors.employeeId = 'Employee ID is required';
+    if (formData.userType === "Employee" && !formData.employeeId.trim()) {
+      newErrors.employeeId = "Employee ID is required";
     }
 
     setErrors(newErrors);
@@ -84,29 +93,30 @@ export default function RegisterPage() {
     e.preventDefault();
 
     if (usernameError) {
-        alert("Please choose a different username");
-        return;
-      }
-      
+      alert("Please choose a different username");
+      return;
+    }
+
     if (!validate()) return;
 
+    // Prepare data for submission
     try {
-      const response = await fetch('http://localhost:5275/api/users/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5275/api/users/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        alert('User registered successfully!');
-        navigate('/'); // Redirect to login
+        alert("User registered successfully!");
+        navigate("/"); // Redirect to login
       } else {
-        alert('Failed to register user');
+        alert("Failed to register user");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -208,7 +218,7 @@ export default function RegisterPage() {
             </select>
           </div>
 
-          {formData.userType === 'Employee' && (
+          {formData.userType === "Employee" && (
             <div className="form-row">
               <label htmlFor="employeeId">Employee ID:</label>
               <input
@@ -219,7 +229,9 @@ export default function RegisterPage() {
                 value={formData.employeeId}
                 onChange={handleChange}
               />
-              {errors.employeeId && <span className="error">{errors.employeeId}</span>}
+              {errors.employeeId && (
+                <span className="error">{errors.employeeId}</span>
+              )}
             </div>
           )}
 

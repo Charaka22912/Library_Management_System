@@ -1,20 +1,25 @@
 import React, { useState } from "react";
+
+//import css and service
 import "../css/addbook.css";
 import { addBook } from "../useCases/book/bookservice";
 
 export default function AddBook() {
+  // State to hold book data
   const [bookData, setBookData] = useState({
     title: "",
     author: "",
     description: "",
   });
 
+  // Handler for input changes
   const handleBookChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setBookData({ ...bookData, [e.target.name]: e.target.value });
   };
 
+  // Handler for form submission
   const handleAddBook = async (e: React.FormEvent) => {
     e.preventDefault();
     try {

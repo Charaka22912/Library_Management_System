@@ -2,7 +2,7 @@ using System;
 
 namespace backend.Models
 {
-    public class User
+    public class User // Represents a user in the library management system
     {
         public int Id { get; set; }
         public string FullName { get; set; }

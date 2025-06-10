@@ -74,3 +74,15 @@
   background-color: #09e932;
   color: white;
 }
+
+.save-button:hover {
+  background-color: #3f7bcf;
+  border: none;
+  color: white;
+}
+
+.cancel-button:hover {
+  border: none;
+  background-color: rgb(171, 68, 27);
+  color: white;
+}

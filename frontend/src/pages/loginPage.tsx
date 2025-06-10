@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+
+// Import necessary components and styles
 import "../css/pages.css";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Use useNavigate hook for navigation
 
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
-  });
+  }); // State to hold login credentials
 
+  // Handler for input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
       ...credentials,
@@ -17,10 +20,12 @@ export default function Login() {
     });
   };
 
+  // Handler for form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Sending login request with credentials:", credentials); // Debug log
 
+    // Send login request to the backend API
     try {
       const response = await fetch("http://localhost:5275/api/users/login", {
         method: "POST",
@@ -30,9 +35,9 @@ export default function Login() {
 
       if (response.ok) {
         const result = await response.json();
-        localStorage.setItem("username", result.username);
-        localStorage.setItem("userType", result.userType);
-        localStorage.setItem("userId", result.userId);
+        localStorage.setItem("username", result.username); // Store username in localStorage
+        localStorage.setItem("userType", result.userType); //  Store user type in localStorage
+        localStorage.setItem("userId", result.userId); // Store user ID in localStorage
         navigate("/home");
       } else {
         alert("Invalid username or password");
@@ -71,7 +76,6 @@ export default function Login() {
               required
             />
             <div className="links">
-              <span>Forgot Password?</span>
               <br />
             </div>
             <p>

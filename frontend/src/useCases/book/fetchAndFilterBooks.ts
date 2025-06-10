@@ -1,6 +1,7 @@
 import { Book } from "../../domain/Book";
 import { bookApi } from "../../infrastructure/bookApi";
 
+// Function to fetch all books and filter them based on a search term
 export const fetchAndFilterBooks = async (
   searchTerm: string
 ): Promise<Book[]> => {

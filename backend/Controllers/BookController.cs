@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
-    [ApiController]
-    [Route("api/books")]
+    [ApiController] // This attribute indicates that this class is an API controller
+    [Route("api/books")] //route for the controller
     public class BooksController : ControllerBase
     {
         private readonly LibraryContext _context;
@@ -17,7 +17,7 @@ namespace backend.Controllers
         {
             _context = context;
         }
-
+        // Endpoint to add a new book
         [HttpPost]
         public async Task<IActionResult> AddBook([FromBody] Book book)
         {
@@ -26,6 +26,7 @@ namespace backend.Controllers
             return Ok(new { message = "Book added successfully", book });
         }
 
+        // Endpoint to get a book by ID
         [HttpGet]
         public async Task<IActionResult> GetAllBooks()
         {
@@ -33,6 +34,7 @@ namespace backend.Controllers
             return Ok(books);
         }
 
+        // Endpoint to Update a book by ID
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] Book updatedBook)
         {
@@ -50,6 +52,8 @@ namespace backend.Controllers
             return Ok(existingBook);
         }
 
+
+        // Endpoint to delete a book by ID
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {

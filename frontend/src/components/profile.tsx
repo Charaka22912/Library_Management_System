@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
+
+// Import necessary components and styles
 import { Users } from "../../src/domain/User";
 import { getUserProfile } from "../../src/useCases/user/getCurrentUser";
 import "../css/profile.css";
 import { editUserProfile } from "../../src/useCases/user/getCurrentUser";
 
 export default function Profile() {
-  const [user, setUser] = useState<Users | null>(null);
-  const [editMode, setEditMode] = useState(false);
-  const [editedUser, setEditedUser] = useState<Users | null>(null);
+  const [user, setUser] = useState<Users | null>(null); // State to hold user profile data
+  const [editMode, setEditMode] = useState(false); // State to track if we are in edit mode
+  const [editedUser, setEditedUser] = useState<Users | null>(null); // State to hold edited user data
 
+  // Load user profile when the component mounts
   useEffect(() => {
     async function loadUser() {
       try {
@@ -23,11 +26,13 @@ export default function Profile() {
     loadUser();
   }, []);
 
+  // Handler for input changes in edit mode
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!editedUser) return;
     setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
   };
 
+  // Handler for saving changes in edit mode
   const handleSave = async () => {
     try {
       if (!editedUser) return;
@@ -39,7 +44,7 @@ export default function Profile() {
       alert("Failed to save profile");
     }
   };
-  if (!user || !editedUser) return <p>Loading profile...</p>;
+  if (!user || !editedUser) return <p>Loading profile...</p>; // Show loading state while fetching user data
 
   return (
     <div className="profile-container">

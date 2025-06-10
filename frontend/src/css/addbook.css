@@ -1,6 +1,6 @@
 .add-layout {
-  justify-content: center; /* Horizontal center */
-  align-items: center; /* Vertical center */
+  justify-content: center;
+  align-items: center;
   height: 100vh;
 }
 .add-book-container {
@@ -38,7 +38,7 @@
 
 .right-container {
   flex: 2;
-  background: #ffffff; /* lightened primary color */
+  background: #ffffff;
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -91,11 +91,10 @@
   border-radius: 20px;
   padding: 10px 20px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
   font-family: "poppins", sans-serif;
   font-weight: bold;
 }
 
 .right-container button:hover {
-  background: rgb(11, 41, 190); /* Change to a lighter shade on hover */
+  background: rgb(11, 41, 190);
 }

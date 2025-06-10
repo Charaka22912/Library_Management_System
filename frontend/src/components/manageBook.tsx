@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+
+// Import necessary components and styles
 import { Book } from "../../src/domain/Book";
 import "../../src/css/managebook.css";
 import {
@@ -8,38 +10,42 @@ import {
 } from "../../src/useCases/book/bookservice";
 
 export default function ManageBook() {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [books, setBooks] = useState<Book[]>([]); // State to hold the list of books
+  const [allBooks, setAllBooks] = useState<Book[]>([]); // State to hold all books for filtering
+  const [searchTerm, setSearchTerm] = useState(""); // State to hold the search term
   const [form, setForm] = useState<Book>({
     title: "",
     author: "",
     description: "",
     id: 0,
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState(false); // State to track if we are editing a book
+  const [showForm, setShowForm] = useState(false); // State to control the visibility of the form
+  const formRef = useRef<HTMLFormElement | null>(null); // Reference to the form element
+  const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null); // State to hold the ID of the book to confirm deletion
 
+  // Load books when the component mounts and set up event listeners
   useEffect(() => {
     loadBooks();
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Function to load books from the server
   const loadBooks = async () => {
     const data = await getBooks();
     setBooks(data);
     setAllBooks(data);
   };
 
+  // Function to handle clicks outside the form to reset the form
   const handleClickOutside = (e: MouseEvent) => {
     if (formRef.current && !formRef.current.contains(e.target as Node)) {
       resetForm();
     }
   };
 
+  // Function to handle search input changes
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
@@ -52,12 +58,14 @@ export default function ManageBook() {
     setBooks(filtered);
   };
 
+  // Function to handle changes in the form inputs
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Function to handle form submission for updating a book
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.id) return console.error("No book selected for editing.");
@@ -66,16 +74,19 @@ export default function ManageBook() {
     loadBooks();
   };
 
+  // Function to handle editing a book
   const handleEdit = (book: Book) => {
     setForm(book);
     setIsEditing(true);
     setShowForm(true);
   };
 
+  // Function to handle delete button click
   const handleDeleteClick = (id: number) => {
-    setConfirmDeleteId(id); // Open modal
+    setConfirmDeleteId(id);
   };
 
+  // Function to confirm deletion of a book
   const confirmDelete = async () => {
     if (confirmDeleteId !== null) {
       await deleteExistingBook(confirmDeleteId);
@@ -84,10 +95,12 @@ export default function ManageBook() {
     }
   };
 
+  // Function to cancel deletion of a book
   const cancelDelete = () => {
     setConfirmDeleteId(null);
   };
 
+  // Function to reset the form and hide it
   const resetForm = () => {
     setShowForm(false);
     setIsEditing(false);

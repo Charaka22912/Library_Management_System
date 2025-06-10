@@ -1,5 +1,6 @@
 import { Users } from "../domain/User";
 
+// This module handles user-related storage operations, including getting user details,
 export const userStorage = {
   getUsername: () => localStorage.getItem("username"),
   getUserType: () => localStorage.getItem("userType"),
@@ -11,12 +12,14 @@ export const userStorage = {
   },
 };
 
+//getAllUsers fetches all users from the backend API
 export const getAllUsers = async () => {
   const res = await fetch("http://localhost:5275/api/users");
   if (!res.ok) throw new Error("Failed to fetch users");
   return res.json();
 };
 
+// getUserById fetches a user by their ID from the backend API
 export const deleteUserById = async (id: number) => {
   const res = await fetch(`http://localhost:5275/api/users/${id}`, {
     method: "DELETE",
@@ -25,6 +28,7 @@ export const deleteUserById = async (id: number) => {
   return res.json();
 };
 
+// fetchUserProfile retrieves the current user's profile from the backend API
 export const fetchUserProfile = async (): Promise<Users> => {
   const userId = localStorage.getItem("userId");
 
@@ -36,6 +40,7 @@ export const fetchUserProfile = async (): Promise<Users> => {
   return res.json();
 };
 
+// updateUserProfile updates the current user's profile with the provided data
 export const updateUserProfile = async (user: Users): Promise<Users> => {
   console.log("Updating user profile with data:", user);
   const userId = localStorage.getItem("userId");
@@ -44,10 +49,10 @@ export const updateUserProfile = async (user: Users): Promise<Users> => {
     Address: user.address,
     Nic: user.nic,
     Dob: new Date(user.dob).toISOString(),
-    UserType: user.userType, // must be present
-    Password: user.password, // must be present even if not editable
-    Username: user.username, // must be present
-    EmployeeID: user.employeeID, // must be present
+    UserType: user.userType,
+    Password: user.password,
+    Username: user.username,
+    EmployeeID: user.employeeID,
   };
   const res = await fetch(`http://localhost:5275/api/users/update/${userId}`, {
     method: "PUT",
