@@ -11,6 +11,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/users")]
+
     public class UsersController : ControllerBase
     {
         private readonly LibraryContext _context;
@@ -18,6 +19,24 @@ namespace backend.Controllers
         public UsersController(LibraryContext context)
         {
             _context = context;
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return Ok(users);
+        }
+
+        // DELETE: api/users/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "User deleted successfully" });
         }
 
         [HttpPost("register")]
@@ -52,11 +71,51 @@ namespace backend.Controllers
             {
                 message = "Login successful",
                 username = user.Username,
-                userType = user.UserType  
+                userType = user.UserType,
+                userId = user.Id
             };
-
+            Console.WriteLine(user.Id);
             return Ok(response);
         }
+
+
+        [HttpGet("profile/{id}")]
+        public async Task<IActionResult> GetUserProfile(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            return Ok(user); // return all user fields
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);  // <-- This returns detailed validation errors
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            user.FullName = updatedUser.FullName;
+            user.Address = updatedUser.Address;
+            user.Nic = updatedUser.Nic;
+            user.Dob = updatedUser.Dob;
+            user.UserType = updatedUser.UserType;
+            user.Password = updatedUser.Password;
+            user.EmployeeID = updatedUser.EmployeeID;
+            user.Username = updatedUser.Username;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "User updated successfully" });
+        }
+
 
     }
 }

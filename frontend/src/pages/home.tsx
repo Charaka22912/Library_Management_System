@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, act } from "react";
 import "../css/home.css";
 import Addbook from "../components/addBook";
 import BookList from "../components/bookList";
 import ManageBook from "../components/manageBook";
 import { getCurrentUser } from "../useCases/user/getCurrentUser";
 import { userStorage } from "../infrastructure/userStorage";
+import Profile from "../components/profile";
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<"view" | "add" | "manage">(
-    "view"
-  );
+  const [activeView, setActiveView] = useState<
+    "view" | "add" | "manage" | "profile"
+  >("view");
   const [username, setUsername] = useState<string>("");
+
   const [userType, setUserType] = useState<"Student" | "Employee" | "">("");
 
   useEffect(() => {
@@ -50,14 +52,15 @@ export default function Home() {
               </span>
               <span className="menu-text">View Books</span>
             </li>
-
-            <li
-              className={`menu-item ${activeView === "add" ? "active" : ""}`}
-              onClick={() => setActiveView("add")}
-            >
-              <span className="menu-icon material-symbols-outlined">add</span>
-              <span className="menu-text">Add Book</span>
-            </li>
+            {userType === "Employee" && (
+              <li
+                className={`menu-item ${activeView === "add" ? "active" : ""}`}
+                onClick={() => setActiveView("add")}
+              >
+                <span className="menu-icon material-symbols-outlined">add</span>
+                <span className="menu-text">Add Book</span>
+              </li>
+            )}
 
             {userType === "Employee" && (
               <li
@@ -70,17 +73,27 @@ export default function Home() {
                 <span className="menu-text">Manage Books</span>
               </li>
             )}
+            <li
+              className={`menu-item ${activeView === "profile" ? "active" : ""}`}
+              onClick={() => setActiveView("profile")}
+            >
+              <span className="material-symbols-outlined">person</span>
+              <span className="menu-text">My Profile</span>
+            </li>
           </ul>
         </nav>
       </aside>
 
       <div className="content">
-        <button className="logout-button" onClick={handleLogout}>
-          <span className="material-symbols-outlined">logout</span>
-        </button>
         {activeView === "view" && <BookList />}
         {activeView === "add" && <Addbook />}
         {activeView === "manage" && <ManageBook />}
+        {activeView === "profile" && <Profile />}
+        <div>
+          <button className="logout-button" onClick={handleLogout}>
+            <span className="material-symbols-outlined">logout</span>
+          </button>
+        </div>
       </div>
     </div>
   );

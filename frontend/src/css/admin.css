@@ -1,0 +1,134 @@
+/* Admin Login Panel */
+.admin-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  gap: 12px;
+}
+
+.admin-login input {
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.admin-login button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admin-login button:hover {
+  background-color: #0056b3;
+}
+
+/* Admin Panel Layout */
+.admin-panel {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+.sidebar {
+  width: 260px;
+  background-color: #ffffff; /* Slate-800 */
+  color: #3f82e0; /* Slate-100 */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: "poppins", sans-serif;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.sidebar-nav .nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-list li:hover {
+  background-color: #3f7bcf; /* Hover color */
+  color: white;
+}
+
+.nav-list li.active {
+  background-color: #3f82e0; /* Active color */
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9fafb;
+  overflow-y: auto;
+  position: relative;
+}
+
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logout-button:hover {
+  background-color: #b91c1c;
+}
+
+.user-management {
+  padding: 20px;
+}
+
+.user-management table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-management th,
+.user-management td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.user-management button {
+  background-color: transparent;
+  border: none;
+  color: red;
+  cursor: pointer;
+}

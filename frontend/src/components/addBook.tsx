@@ -29,53 +29,53 @@ export default function AddBook() {
 
   return (
     <div className="add-layout">
-      <div className="add-book-container">
-        <div className="left-container">
-          <h2>Library Management System</h2>
-        </div>
+      <div className="book-add-container">
+        <h1 className="heading">Add New Book</h1>
+      </div>
+      <div className="add-book-wrapper">
+        <div className="add-book-container">
+          <div className="right-container">
+            <form onSubmit={handleAddBook}>
+              <div className="set">
+                <label>Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={bookData.title}
+                  onChange={handleBookChange}
+                  placeholder="Enter Book Title"
+                  required
+                />
+              </div>
 
-        <div className="right-container">
-          <h1>Add a New Book</h1>
-          <form onSubmit={handleAddBook}>
-            <div className="set">
-              <label>Title</label>
-              <input
-                type="text"
-                name="title"
-                value={bookData.title}
-                onChange={handleBookChange}
-                placeholder="Enter book title"
-                required
-              />
-            </div>
+              <div className="set">
+                <label>Author</label>
+                <input
+                  type="text"
+                  name="author"
+                  value={bookData.author}
+                  onChange={handleBookChange}
+                  placeholder="Enter Author Name"
+                  required
+                />
+              </div>
 
-            <div className="set">
-              <label>Author</label>
-              <input
-                type="text"
-                name="author"
-                value={bookData.author}
-                onChange={handleBookChange}
-                placeholder="Enter Author Name"
-                required
-              />
-            </div>
+              <div className="set">
+                <label>Description</label>
+                <textarea
+                  name="description"
+                  value={bookData.description}
+                  onChange={handleBookChange}
+                  placeholder="Enter Book Description"
+                  required
+                />
+              </div>
 
-            <div className="set">
-              <label>Description</label>
-              <textarea
-                name="description"
-                value={bookData.description}
-                onChange={handleBookChange}
-                placeholder="Enter book description"
-                required
-              />
-            </div>
-
-            <footer>
-              <button type="submit">Add Book</button>
-            </footer>
-          </form>
+              <footer>
+                <button type="submit">Add Book</button>
+              </footer>
+            </form>
+          </div>
         </div>
       </div>
     </div>

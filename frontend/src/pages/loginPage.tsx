@@ -1,45 +1,44 @@
-import React, { useState } from 'react';
-import '../css/pages.css';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import "../css/pages.css";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  console.log("Login component loaded"); // Debug log
-
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({
       ...credentials,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Sending login request with credentials:', credentials); // Debug log
+    console.log("Sending login request with credentials:", credentials); // Debug log
 
     try {
-      const response = await fetch('http://localhost:5275/api/users/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials)
+      const response = await fetch("http://localhost:5275/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
       });
 
       if (response.ok) {
         const result = await response.json();
-        localStorage.setItem('username', result.username);
-        localStorage.setItem('userType', result.userType);
-        navigate('/home');
+        localStorage.setItem("username", result.username);
+        localStorage.setItem("userType", result.userType);
+        localStorage.setItem("userId", result.userId);
+        navigate("/home");
       } else {
-        alert('Invalid username or password');
+        alert("Invalid username or password");
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
     }
   };
 
@@ -47,7 +46,10 @@ export default function Login() {
     <div className="login-body">
       <div className="login-container">
         <div className="login-left">
-          <h1>Welcome to <br /><strong>Library Management System</strong></h1>
+          <h1>
+            Welcome to <br />
+            <strong>Library Management System</strong>
+          </h1>
         </div>
         <div className="login-right">
           <h2>LOGIN</h2>
@@ -69,9 +71,12 @@ export default function Login() {
               required
             />
             <div className="links">
-              <span>Forgot Password?</span><br />
+              <span>Forgot Password?</span>
+              <br />
             </div>
-            <p>Don't Have Account? <Link to='/register'>Register</Link></p>
+            <p>
+              Don't Have Account? <Link to="/register">Register</Link>
+            </p>
             <br />
             <button type="submit">Log In</button>
           </form>
